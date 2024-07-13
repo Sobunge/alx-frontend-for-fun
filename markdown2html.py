@@ -8,6 +8,7 @@ import os
 import re
 import hashlib
 
+
 def convert_markdown_to_html(input_file, output_file):
     with open(input_file, 'r', encoding='utf-8') as file_1:
         html_content = []
@@ -31,7 +32,8 @@ def convert_markdown_to_html(input_file, output_file):
                     html_content.append('</p>')
                     in_paragraph = False
                 h_level = len(heading_match.group(1))
-                html_content.append(f'<h{h_level}>{heading_match.group(2)}</h{h_level}>')
+                html_content.append(
+                        f'<h{h_level}>{heading_match.group(2)}</h{h_level}>')
             # Convert unordered lists
             elif line.startswith('- '):
                 if in_ordered_list:
@@ -61,8 +63,12 @@ def convert_markdown_to_html(input_file, output_file):
                     in_ordered_list = False
 
                 # Handle special cases
-                line = re.sub(r'\[\[(.+?)\]\]', lambda match: hashlib.md5(match.group(1).encode()).hexdigest(), line)
-                line = re.sub(r'\(\((.+?)\)\)', lambda match: match.group(1).replace('c', '').replace('C', ''), line)
+                line = re.sub(r'\[\[(.+?)\]\]',
+                              lambda match: hashlib.md5(
+                                  match.group(1).encode()).hexdigest(), line)
+                line = re.sub(r'\(\((.+?)\)\)',
+                              lambda match: match.group(1).replace('c', '')
+                              .replace('C', ''), line)
 
                 # Convert paragraphs
                 if line:
@@ -91,10 +97,12 @@ def convert_markdown_to_html(input_file, output_file):
     with open(output_file, 'w', encoding='utf-8') as file_2:
         file_2.write('\n'.join(html_content) + '\n')
 
+
 if __name__ == '__main__':
     # Check that the number of arguments passed is 2
     if len(sys.argv) != 3:
-        print('Usage: ./markdown2html.py README.md README.html', file=sys.stderr)
+        print('Usage: ./markdown2html.py README.md README.html',
+              file=sys.stderr)
         sys.exit(1)
 
     # Store the arguments into variables
