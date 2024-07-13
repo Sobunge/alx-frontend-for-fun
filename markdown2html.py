@@ -6,7 +6,6 @@ A script that converts Markdown to HTML.
 import sys
 import os
 import re
-import hashlib
 
 def convert_markdown_to_html(input_file, output_file):
     with open(input_file, 'r', encoding='utf-8') as file_1:
@@ -31,7 +30,7 @@ def convert_markdown_to_html(input_file, output_file):
                     html_content.append('</p>')
                     in_paragraph = False
                 h_level = len(heading_match.group(1))
-                html_content.append(f'<h{h_level}>{heading_match.group(2)}</h{h_level}>')
+                html_content.append(f'<h{h_level}>{heading_match.group(2)}</h{level}>')
             # Convert unordered lists
             elif line.startswith('- '):
                 if in_ordered_list:
@@ -40,7 +39,8 @@ def convert_markdown_to_html(input_file, output_file):
                 if not in_unordered_list:
                     html_content.append('<ul>')
                     in_unordered_list = True
-                item = line[2:]  # Remove '- ' from the start
+                item = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', line)
+                item = re.sub(r'__(.+?)__', r'<em>\1</em>', item)
                 html_content.append(f'<li>{item}</li>')
             # Convert ordered lists
             elif line.startswith('* '):
@@ -50,7 +50,8 @@ def convert_markdown_to_html(input_file, output_file):
                 if not in_ordered_list:
                     html_content.append('<ol>')
                     in_ordered_list = True
-                item = line[2:]  # Remove '* ' from the start
+                item = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', line)
+                item = re.sub(r'__(.+?)__', r'<em>\1</em>', item)
                 html_content.append(f'<li>{item}</li>')
             else:
                 if in_unordered_list:
@@ -60,16 +61,10 @@ def convert_markdown_to_html(input_file, output_file):
                     html_content.append('</ol>')
                     in_ordered_list = False
 
-                # Handle special cases
-                line = re.sub(r'\[\[(.+?)\]\]', lambda match: hashlib.md5(match.group(1).encode()).hexdigest(), line)
-                line = re.sub(r'\(\((.+?)\)\)', lambda match: match.group(1).replace('c', '').replace('C', ''), line)
-
-                # Convert bold and emphasized text
-                line = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', line)
-                line = re.sub(r'__(.+?)__', r'<em>\1</em>', line)
-
-                # Convert paragraphs
+                # Handle paragraphs
                 if line:
+                    line = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', line)
+                    line = re.sub(r'__(.+?)__', r'<em>\1</em>', line)
                     if not in_paragraph:
                         html_content.append('<p>')
                         in_paragraph = True
