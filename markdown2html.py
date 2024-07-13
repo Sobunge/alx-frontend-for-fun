@@ -6,7 +6,6 @@ A script that converts Markdown to HTML.
 import sys
 import os
 import re
-import hashlib
 
 def convert_markdown_to_html(input_file, output_file):
     with open(input_file, 'r', encoding='utf-8') as file_1:
@@ -60,11 +59,7 @@ def convert_markdown_to_html(input_file, output_file):
                     html_content.append('</ol>')
                     in_ordered_list = False
 
-                # Handle special cases
-                line = re.sub(r'\[\[(.+?)\]\]', lambda match: hashlib.md5(match.group(1).encode()).hexdigest(), line)
-                line = re.sub(r'\(\((.+?)\)\)', lambda match: match.group(1).replace('c', '').replace('C', ''), line)
-
-                # Convert paragraphs
+                # Handle paragraphs and inline formatting
                 if line:
                     if not in_paragraph:
                         html_content.append('<p>')
