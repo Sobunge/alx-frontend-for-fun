@@ -1,7 +1,16 @@
-// 103-sort_strings.scss
-
-// Insert the sorted list from JavaScript
+// Define your sorted list
 $list_to_sort: anna, carrie, felicia, john, kim, zoe;
 
-// Print the sorted list in debug
-@debug $list_to_sort;
+// Convert list to a comma-separated string for consistent output
+@function list-to-string($list) {
+  $string: '';
+  @each $item in $list {
+    $string: $string + $item + ' ';
+  }
+  // Remove the trailing comma and space
+  $string: str-slice($string, 1, -2);
+  @return $string;
+}
+
+// Print the formatted list in debug
+@debug list-to-string($list_to_sort);
