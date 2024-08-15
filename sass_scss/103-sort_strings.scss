@@ -3,7 +3,7 @@
 This file sorts the variable $list_to_sort and prints the sorted list in the debug output.
 */
 
-// Define your sorted list from the JavaScript output
+// Define your sorted list
 $list_to_sort: anna, carrie, felicia, john, kim, zoe;
 
 // Function to convert list to a space-separated string
@@ -18,4 +18,4 @@ $list_to_sort: anna, carrie, felicia, john, kim, zoe;
 }
 
 // Print the formatted list in debug
-@debug 'DEBUG: ' + list-to-string($list_to_sort);
+@debug list-to-string($list_to_sort);
