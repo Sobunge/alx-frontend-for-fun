@@ -4,4 +4,4 @@
 $list_to_sort: anna, carrie, felicia, john, kim, zoe;
 
 // Print the sorted list to debug
-@debug 'DEBUG: ' + (join($list_to_sort, ' '));
+@debug 'DEBUG: ' + (join($list_to_sort ' '));
