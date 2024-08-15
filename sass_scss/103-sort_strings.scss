@@ -1,18 +1,44 @@
-/* Write a Sass file that sorts the variable $list_to_sort and prints the sorted list in the debug output. */
+/* 
+103-sort_strings.scss
+This file sorts the variable $list_to_sort and prints the sorted list in the debug output.
+*/
 
-// Define your sorted list
-$list_to_sort: anna, carrie, felicia, john, kim, zoe;
+// Define your list to sort
+$list_to_sort: john, anna, zoe, kim, felicia, carrie;
 
-// Convert list to a comma-separated string for consistent output
+// Function to convert list to a space-separated string
 @function list-to-string($list) {
   $string: '';
   @each $item in $list {
     $string: $string + $item + ' ';
   }
-  // Remove the trailing comma and space
-  $string: str-slice($string, 1, -2);
+  // Remove the trailing space
+  $string: str-slice($string, 1, -1);
   @return $string;
 }
 
-// Print the formatted list in debug
-@debug list-to-string($list_to_sort);
+// Sorting function to sort the list (bubble sort example)
+@function sort-list($list) {
+  $length: length($list);
+  $sorted-list: $list;
+
+  @for $i from 1 through $length {
+    @for $j from 1 through $length - $i {
+      $current: nth($sorted-list, $j);
+      $next: nth($sorted-list, $j + 1);
+
+      @if $current > $next {
+        $sorted-list: set-nth($sorted-list, $j, $next);
+        $sorted-list: set-nth($sorted-list, $j + 1, $current);
+      }
+    }
+  }
+
+  @return $sorted-list;
+}
+
+// Sort the list
+$sorted_list: sort-list($list_to_sort);
+
+// Print the sorted list to debug
+@debug 'DEBUG: ' + list-to-string($sorted_list);
