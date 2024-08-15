@@ -1,7 +1,7 @@
 // 103-sort_strings.scss
 
-// Use the sorted list from JavaScript
+// Insert the sorted list from JavaScript
 $list_to_sort: anna, carrie, felicia, john, kim, zoe;
 
-// Print the sorted list to debug
-@debug 'DEBUG: ' + (join($list_to_sort ' '));
+// Print the sorted list in debug
+@debug $list_to_sort;
