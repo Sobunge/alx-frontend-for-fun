@@ -5,7 +5,7 @@ $list_to_sort: anna, carrie, felicia, john, kim, zoe;
 @function list-to-string($list) {
   $string: '';
   @each $item in $list {
-    $string: $string + $item + ', ';
+    $string: $string + $item + ' ';
   }
   // Remove the trailing comma and space
   $string: str-slice($string, 1, -2);
