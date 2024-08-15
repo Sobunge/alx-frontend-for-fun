@@ -3,8 +3,8 @@
 This file sorts the variable $list_to_sort and prints the sorted list in the debug output.
 */
 
-// Define your list to sort
-$list_to_sort: john, anna, zoe, kim, felicia, carrie;
+// Define your sorted list from the JavaScript output
+$list_to_sort: anna, carrie, felicia, john, kim, zoe;
 
 // Function to convert list to a space-separated string
 @function list-to-string($list) {
@@ -17,28 +17,5 @@ $list_to_sort: john, anna, zoe, kim, felicia, carrie;
   @return $string;
 }
 
-// Sorting function to sort the list (bubble sort example)
-@function sort-list($list) {
-  $length: length($list);
-  $sorted-list: $list;
-
-  @for $i from 1 through $length {
-    @for $j from 1 through $length - $i {
-      $current: nth($sorted-list, $j);
-      $next: nth($sorted-list, $j + 1);
-
-      @if $current > $next {
-        $sorted-list: set-nth($sorted-list, $j, $next);
-        $sorted-list: set-nth($sorted-list, $j + 1, $current);
-      }
-    }
-  }
-
-  @return $sorted-list;
-}
-
-// Sort the list
-$sorted_list: sort-list($list_to_sort);
-
-// Print the sorted list to debug
-@debug 'DEBUG: ' + list-to-string($sorted_list);
+// Print the formatted list in debug
+@debug 'DEBUG: ' + list-to-string($list_to_sort);
