@@ -1,5 +1,27 @@
-/* Sorts the variable $list_to_sort and prints the sorted list in the debug output */
+// 103-sort_list.scss
 
-@import '103-sort_list';
+$list_to_sort: john, anna, zoe, kim, felicia, carrie;
 
-@debug $list_to_sort;
+// Bubble sort function to sort the list
+@function sort-list($list) {
+  $list-length: length($list);
+  
+  @for $i from 1 through $list-length {
+    @for $j from 1 through $list-length - $i {
+      $current-item: nth($list, $j);
+      $next-item: nth($list, $j + 1);
+      
+      @if $current-item > $next-item {
+        $list: set-nth($list, $j, $next-item);
+        $list: set-nth($list, $j + 1, $current-item);
+      }
+    }
+  }
+  
+  @return $list;
+}
+
+// Sorting the list and printing it to debug
+$list_sorted: sort-list($list_to_sort);
+
+@debug $list_sorted;
